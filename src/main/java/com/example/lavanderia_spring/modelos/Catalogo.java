@@ -19,7 +19,7 @@ public class Catalogo {
     private Integer id;
 
     @Column(name="precio_serv_prenda")
-    private Float precioServPrenda;
+    private Double precioServPrenda;
 
     @Column(name="tipo_prenda")
     private Integer tipoPrenda;

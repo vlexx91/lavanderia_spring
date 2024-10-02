@@ -40,7 +40,7 @@ public class PedidosServicio {
      * @return
      */
 
-    public Pedidos save(Pedidos pedidos){
+    public Pedidos crearPedido(Pedidos pedidos){
         return pedidosRepositorio.save(pedidos);
     }
 
