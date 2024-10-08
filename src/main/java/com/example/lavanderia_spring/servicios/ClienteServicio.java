@@ -27,6 +27,17 @@ public class ClienteServicio {
     }
 
     /**
+     * Busca un cliente por ID
+     *
+     * @param id
+     * @return
+     */
+
+    public Cliente getClienteById(Integer id) {
+        return clienteRepositorio.findById(id).orElse(null);
+    }
+
+    /**
      * Buscar todos los clientes
      *
      * @return
