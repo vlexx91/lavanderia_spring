@@ -1,10 +1,14 @@
 package com.example.lavanderia_spring.servicios;
 
+import com.example.lavanderia_spring.dto.ClienteCrearDTO;
+import com.example.lavanderia_spring.mappers.ClienteMapper;
 import com.example.lavanderia_spring.modelos.Cliente;
 import com.example.lavanderia_spring.repositorios.ClienteRepositorio;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service //NO OLVIDAR
@@ -20,6 +24,7 @@ public class ClienteServicio {
      */
 
     private ClienteRepositorio clienteRepositorio;
+
 
     public List<Cliente> getCliente(String dni) {
         List<Cliente> cliente = clienteRepositorio.findAllByDniEquals(dni);
@@ -55,6 +60,30 @@ public class ClienteServicio {
 
     public Cliente crearCliente (Cliente cliente) {
         return clienteRepositorio.save(cliente);
+   }
+
+   /**
+   * guardar cliente DTO
+   */
+
+   public Cliente guardarClienteDTO(ClienteCrearDTO dto){
+
+           Cliente clienteGuardar = new Cliente();
+           clienteGuardar.setNombre(dto.getNombre());
+           clienteGuardar.setEmail(dto.getEmail());
+           clienteGuardar.setDireccion(dto.getDireccion());
+           clienteGuardar.setDni(dto.getDni());
+           clienteGuardar.setTelefono(dto.getTelefono());
+
+           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+           LocalDate fechaNacimiento = LocalDate.parse(dto.getFechaNacimiento(), formatter);
+           clienteGuardar.setFechaNacimiento(fechaNacimiento);
+
+           //for (Cliente c : clientes){
+               //clienteMapper.add(c); //ESTO ESTA INCOMPLETO MIRAR PROYECTO LUIS
+           //}
+
+           return clienteRepositorio.save(clienteGuardar);
    }
 
     /**

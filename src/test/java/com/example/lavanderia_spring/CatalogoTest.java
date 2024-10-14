@@ -35,33 +35,15 @@ public class CatalogoTest {
         }
     }
 
-//    @Test
-//    @Transactional
-//    void testCrearCatalogo(){
-//
-//        Cliente cliente = new Cliente();
-//        cliente.setNombre("Maikel Rich");
-//        cliente.setDni("12345678");
-//        cliente.setDireccion("Calle 321");
-//        cliente.setTelefono("123456789");
-//        cliente.setEmail("a@gmail.com");
-//        cliente.setFechaNacimiento(LocalDate.of(1990, 2, 1));
-//        Cliente clienteGuardado = clienteServicio.crearCliente(cliente);
-//
-//        Pedidos pedidos = new Pedidos();
-//        pedidos.setFechaEntrega(LocalDate.of(2000, 2, 10));
-//        pedidos.setTotalPrecio(300.0);
-//        pedidos.setCliente(clienteGuardado);
-//        Pedidos pedidoGuardado = pedidosServicio.crearPedido(pedidos);
-//
-//        Catalogo catalogo = new Catalogo();
-//        catalogo.setPrecioServPrenda(50.0);
-//        catalogo.setTipoPrenda(2);
-//        catalogo.setTipoServicio(1);
-//        catalogo.setPedidos(pedidoGuardado);
-//        Catalogo catalogoGuardado = catalogoServicio.crearCatalogo(catalogo);
-//        System.out.println(catalogoGuardado);
-//
-//    }
+    @Test
+    void testCrearCatalogo() {
+        Catalogo catalogo = new Catalogo();
+        catalogo.setPrecioServPrenda(50.0);
+        catalogo.setTipoPrenda(2);
+        catalogo.setTipoServicio(1);
+        Catalogo catalogoGuardado = catalogoServicio.crearCatalogo(catalogo);
+        System.out.println(catalogoGuardado);
+    }
+
 
 }

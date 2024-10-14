@@ -1,6 +1,8 @@
 package com.example.lavanderia_spring.servicios;
 
 
+import com.example.lavanderia_spring.dto.LineaDePedidosDTO;
+import com.example.lavanderia_spring.dto.PedidosDTO;
 import com.example.lavanderia_spring.modelos.Pedidos;
 import com.example.lavanderia_spring.repositorios.PedidosRepositorio;
 import lombok.AllArgsConstructor;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -62,5 +65,7 @@ public class PedidosServicio {
     public void eliminar(Pedidos pedidos){
         pedidosRepositorio.delete(pedidos);
     }
+
+
 
 }

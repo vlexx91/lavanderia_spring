@@ -23,6 +23,9 @@ public class PedidosPrendasCatalogo {
     @Column(name="precio")
     private Float precio;
 
+    @Column(name="cantidad")
+    private Integer cantidad;
+
     @ManyToOne
     @JoinColumn(name="id_pedidos")
     private Pedidos id_pedidos;

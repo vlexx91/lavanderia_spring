@@ -34,6 +34,11 @@ public class PedidosTest {
     @Test
     @Transactional
     void testCrearPedidos(){
+
+//        Cliente cliente = new Cliente();
+//        Cliente cliente = clienteServicio.getClienteById(1);
+//        Cliente clienteGuardado = clienteServicio.crearCliente(cliente);
+
         Cliente cliente = new Cliente();
         cliente.setNombre("Maikel Rich");
         cliente.setDni("12345678");

@@ -1,6 +1,8 @@
 package com.example.lavanderia_spring.modelos;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
+
 import java.time.LocalDate;
 
 @Entity
@@ -26,7 +28,7 @@ public class Pedidos {
     @Column(name="total_precio")
     private Double totalPrecio;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="id_cliente")
     private Cliente cliente;
 
