@@ -1,5 +1,7 @@
 package com.example.lavanderia_spring.modelos;
 
+import com.example.lavanderia_spring.enumerados.TipoCatalogo;
+import com.example.lavanderia_spring.enumerados.TipoPrenda;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,9 +24,11 @@ public class Catalogo {
     private Double precioServPrenda;
 
     @Column(name="tipo_prenda")
-    private Integer tipoPrenda;
+    @Enumerated(EnumType.ORDINAL)
+    private TipoPrenda tipoPrenda;
 
     @Column(name="tipo_servicio")
-    private Integer tipoServicio;
+    @Enumerated(EnumType.ORDINAL)
+    private TipoCatalogo tipoCatalogo;
 
 }

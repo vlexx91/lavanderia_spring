@@ -19,9 +19,11 @@ public class PedidosPrendasCatalogoServicio {
      * Extrae todos los pedidos de la base de datos
      */
 
-    public List<PedidosPrendasCatalogo> getAll(){
-        return pedidosPrendasCatalogoRepositorio.findAll();
-    }
+//    public List<PedidosPrendasCatalogoDTO> getAll() {
+//        List<PedidosPrendasCatalogo> entities = pedidosPrendasCatalogoRepositorio.findAll();
+//        return entities.stream().map(PedidosPrendasCatalogoDTO::fromEntity).toList();
+//    }
+
 
 
     /**

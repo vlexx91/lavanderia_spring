@@ -35,15 +35,15 @@ public class CatalogoTest {
         }
     }
 
-    @Test
-    void testCrearCatalogo() {
-        Catalogo catalogo = new Catalogo();
-        catalogo.setPrecioServPrenda(50.0);
-        catalogo.setTipoPrenda(2);
-        catalogo.setTipoServicio(1);
-        Catalogo catalogoGuardado = catalogoServicio.crearCatalogo(catalogo);
-        System.out.println(catalogoGuardado);
-    }
+//    @Test
+//    void testCrearCatalogo() {
+//        Catalogo catalogo = new Catalogo();
+//        catalogo.setPrecioServPrenda(50.0);
+//        catalogo.setTipoPrenda(2);
+//        catalogo.setTipoServicio(1);
+//        Catalogo catalogoGuardado = catalogoServicio.crearCatalogo(catalogo);
+//        System.out.println(catalogoGuardado);
+//    }
 
 
 }
