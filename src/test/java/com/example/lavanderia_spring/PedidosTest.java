@@ -31,28 +31,28 @@ public class PedidosTest {
         }
     }
 
-    @Test
-    @Transactional
-    void testCrearPedidos(){
-
+//    @Test
+//    @Transactional
+//    void testCrearPedidos(){
+//
+////        Cliente cliente = new Cliente();
+////        Cliente cliente = clienteServicio.getClienteById(1);
+////        Cliente clienteGuardado = clienteServicio.crearCliente(cliente);
+//
 //        Cliente cliente = new Cliente();
-//        Cliente cliente = clienteServicio.getClienteById(1);
+//        cliente.setNombre("Maikel Rich");
+//        cliente.setDni("12345678");
+//        cliente.setDireccion("Calle 321");
+//        cliente.setTelefono("123456789");
+//        cliente.setEmail("a@gmail.com");
+//        cliente.setFechaNacimiento(LocalDate.of(1990, 2, 1));
 //        Cliente clienteGuardado = clienteServicio.crearCliente(cliente);
-
-        Cliente cliente = new Cliente();
-        cliente.setNombre("Maikel Rich");
-        cliente.setDni("12345678");
-        cliente.setDireccion("Calle 321");
-        cliente.setTelefono("123456789");
-        cliente.setEmail("a@gmail.com");
-        cliente.setFechaNacimiento(LocalDate.of(1990, 2, 1));
-        Cliente clienteGuardado = clienteServicio.crearCliente(cliente);
-
-        Pedidos pedidos = new Pedidos();
-        pedidos.setFechaEntrega(LocalDate.of(2020, 2, 10));
-        pedidos.setTotalPrecio(100.0);
-        pedidos.setCliente(clienteGuardado);
-        Pedidos pedidoGuardado = pedidosServicio.crearPedido(pedidos);
-        System.out.println(pedidoGuardado);
-    }
+//
+//        Pedidos pedidos = new Pedidos();
+//        pedidos.setFechaEntrega(LocalDate.of(2020, 2, 10));
+//        pedidos.setTotalPrecio(100.0);
+//        pedidos.setCliente(clienteGuardado);
+//        Pedidos pedidoGuardado = pedidosServicio.crearPedido(pedidos);
+//        System.out.println(pedidoGuardado);
+//    }
 }

@@ -1,6 +1,7 @@
 package com.example.lavanderia_spring.controladores;
 
 
+import com.example.lavanderia_spring.dto.CrearPedidosDTO;
 import com.example.lavanderia_spring.modelos.Pedidos;
 import com.example.lavanderia_spring.repositorios.PedidosRepositorio;
 import com.example.lavanderia_spring.servicios.PedidosServicio;
@@ -15,7 +16,6 @@ import java.util.List;
 
 public class PedidosControlador {
 
-    private final PedidosRepositorio pedidosRepositorio;
     private PedidosServicio pedidosServicio;
 
     @GetMapping("/total")
@@ -34,6 +34,16 @@ public class PedidosControlador {
     public Pedidos getPedidosByIdPath(@PathVariable Integer id){
         Pedidos pedidos = pedidosServicio.getById(id);
         return pedidos;
+    }
+
+    @GetMapping("/importe")
+    public Double getImporteTotal(@RequestParam("id") Integer id){
+        return pedidosServicio.calcularImporte(id);
+    }
+
+    @PostMapping("/crear")
+    public Pedidos crearPedido(@RequestBody CrearPedidosDTO crearPedidosDTO){
+        return pedidosServicio.crearPedido(crearPedidosDTO);
     }
 
 
