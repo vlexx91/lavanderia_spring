@@ -2,6 +2,8 @@ package com.example.lavanderia_spring.controladores;
 
 
 import com.example.lavanderia_spring.dto.CrearPedidosDTO;
+import com.example.lavanderia_spring.dto.MensajeDTO;
+import com.example.lavanderia_spring.dto.PagoDTO;
 import com.example.lavanderia_spring.modelos.Pedidos;
 import com.example.lavanderia_spring.repositorios.PedidosRepositorio;
 import com.example.lavanderia_spring.servicios.PedidosServicio;
@@ -44,6 +46,11 @@ public class PedidosControlador {
     @PostMapping("/crear")
     public Pedidos crearPedido(@RequestBody CrearPedidosDTO crearPedidosDTO){
         return pedidosServicio.crearPedido(crearPedidosDTO);
+    }
+
+    @GetMapping("/pagado")
+    public MensajeDTO pedidoPagado(@RequestBody PagoDTO pagoDTO){
+        return pedidosServicio.procesarPago(pagoDTO);
     }
 
 

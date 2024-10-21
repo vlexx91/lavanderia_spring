@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.Cascade;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "pedidos", schema = "lavanderia", catalog = "postgres")
@@ -31,5 +32,8 @@ public class Pedidos {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="id_cliente")
     private Cliente cliente;
+
+    @OneToMany(mappedBy = "id_pedidos", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PedidosPrendasCatalogo> pedidosPrendasCatalogos;
 
 }

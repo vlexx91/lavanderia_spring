@@ -22,6 +22,9 @@ public class Pagos {
     @Column(name="pagado")
     private Boolean pagado;
 
+    @Column(name = "cantidaddebida")
+    private Float cantidadDebida;
+
     @ManyToOne
     @JoinColumn(name="id_cliente")
     private Cliente cliente;

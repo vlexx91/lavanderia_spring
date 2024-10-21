@@ -7,6 +7,8 @@ import com.example.lavanderia_spring.enumerados.TipoCatalogo;
 import com.example.lavanderia_spring.enumerados.TipoPrenda;
 import com.example.lavanderia_spring.modelos.Catalogo;
 import com.example.lavanderia_spring.repositorios.CatalogoRepositorio;
+import com.example.lavanderia_spring.repositorios.PagosRepositorio;
+import com.example.lavanderia_spring.repositorios.PedidosRepositorio;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,8 @@ import java.util.List;
 @AllArgsConstructor
 public class CatalogoServicio {
 
+    private PedidosRepositorio pedidosRepositorio;
+    private PagosRepositorio pagosRepositorio;
     private CatalogoRepositorio catalogoRepositorio;
 
 
@@ -61,6 +65,35 @@ public class CatalogoServicio {
         }
         mensaje.setMensaje("No disponible");
         return mensaje;
+    }
+
+    /**
+     * ejercicio Luis eliminar servicio
+     */
+
+    //comprobar si el servicio existe
+    //si servicio esta vinculado a un pedido cuyo pago es el estado no es pagado te devuelve un mensaje
+    //de que no se ha podido eliminar
+
+    //si no cumple lo anterior elimina tod0
+
+    public MensajeDTO eliminarServicio(Integer id){
+        MensajeDTO mensaje = new MensajeDTO();
+        Catalogo catalogo = catalogoRepositorio.findById(id).orElse(null);
+
+        boolean relacion = pagosRepositorio.existe(id);
+
+        if (catalogo == null){
+            mensaje.setMensaje("este no existe");
+            return mensaje;
+        } else if (relacion) {
+            catalogoRepositorio.deleteById(id);
+            mensaje.setMensaje("eliminado");
+            return mensaje;
+        }else {
+            mensaje.setMensaje("No se ha podido eliminar pago pendiente");
+            return mensaje;
+        }
     }
 
     /**

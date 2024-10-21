@@ -9,10 +9,7 @@ import com.example.lavanderia_spring.servicios.CatalogoServicio;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +28,10 @@ public class CatalogoControlador {
     @GetMapping("/servicio")
     public MensajeDTO servicioDisponible(@RequestParam TipoPrenda tipoPrenda, @RequestParam TipoCatalogo tipoCatalogo){
         return catalogoServicio.servicioDisponible(tipoPrenda, tipoCatalogo);
+    }
+
+    @DeleteMapping()
+    public MensajeDTO eliminar(@RequestParam Integer id){
+        return catalogoServicio.eliminarServicio(id);
     }
 }
