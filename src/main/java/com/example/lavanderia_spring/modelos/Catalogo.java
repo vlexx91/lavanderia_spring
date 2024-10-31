@@ -5,6 +5,8 @@ import com.example.lavanderia_spring.enumerados.TipoPrenda;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "catalogo", schema = "lavanderia", catalog = "postgres")
 @Getter
@@ -30,5 +32,8 @@ public class Catalogo {
     @Column(name="tipo_servicio")
     @Enumerated(EnumType.ORDINAL)
     private TipoCatalogo tipoCatalogo;
+
+    @OneToMany(mappedBy = "id_catalogo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PedidosPrendasCatalogo> pedidosPrendasCatalogos;
 
 }

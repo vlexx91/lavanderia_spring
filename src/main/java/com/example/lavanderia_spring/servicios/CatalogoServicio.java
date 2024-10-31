@@ -91,7 +91,7 @@ public class CatalogoServicio {
             mensaje.setMensaje("eliminado");
             return mensaje;
         }else {
-            mensaje.setMensaje("No se ha podido eliminar pago pendiente");
+            mensaje.setMensaje("No se ha podido eliminar, pago pendiente");
             return mensaje;
         }
     }

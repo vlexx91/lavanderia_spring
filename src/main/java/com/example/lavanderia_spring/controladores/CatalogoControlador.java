@@ -30,8 +30,9 @@ public class CatalogoControlador {
         return catalogoServicio.servicioDisponible(tipoPrenda, tipoCatalogo);
     }
 
-    @DeleteMapping()
-    public MensajeDTO eliminar(@RequestParam Integer id){
+    @DeleteMapping("/eliminar/{id}")
+    public MensajeDTO eliminar(@PathVariable Integer id) {
         return catalogoServicio.eliminarServicio(id);
     }
+
 }

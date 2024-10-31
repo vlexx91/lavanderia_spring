@@ -20,7 +20,7 @@ import java.util.List;
 public class ClienteControlador {
 
 
-    private final ClienteRepositorio clienteRepositorio;
+    private ClienteRepositorio clienteRepositorio;
     private ClienteServicio clienteServicio;
 
     //usaremos GET, POST, PUT, DELETE

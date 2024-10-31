@@ -1,4 +1,5 @@
 package com.example.lavanderia_spring.modelos;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
@@ -15,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@JsonInclude(JsonInclude.Include.NON_NULL) //unica forma de que no me muestre el null de pedidosPrendasCatalogo
 
 public class Pedidos {
 

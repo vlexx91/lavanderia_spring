@@ -1,5 +1,6 @@
 package com.example.lavanderia_spring.repositorios;
 
+import com.example.lavanderia_spring.modelos.Pedidos;
 import com.example.lavanderia_spring.modelos.PedidosPrendasCatalogo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

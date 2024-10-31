@@ -75,14 +75,14 @@ public class PedidosServicio {
         Cliente cliente = clientesRepositorio.findById(crearPedidosDTO.getClienteId())
                 .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
 
-        // Crear el pedido sin las prendas y servicios directamente asociados
+        // crear el pedido sin las prendas y servicios directamente asociados
         Pedidos pedido = new Pedidos();
         pedido.setCliente(cliente);
         pedido.setTotalPrecio(crearPedidosDTO.getTotalPrecio());
         pedido.setFechaEntrega(LocalDate.now());
         Pedidos pedidoGuardado = pedidosRepositorio.save(pedido);
 
-        // Crear las relaciones en PedidosPrendasCatalogo
+        // crear las relaciones en PedidosPrendasCatalogo
         for (PedidosPrendasCatalogoDTO detalle : crearPedidosDTO.getDetalles()) {
             Prendas prenda = prendasRepositorio.findById(detalle.getId_prendas())
                     .orElseThrow(() -> new RuntimeException("Prenda no encontrada"));
@@ -98,6 +98,7 @@ public class PedidosServicio {
             pedidosPrendasCatalogo.setCantidad(detalle.getCantidad());
 
             pedidosPrendasCatalogoRepositorio.save(pedidosPrendasCatalogo);
+
         }
 
         return pedidoGuardado;
@@ -112,8 +113,15 @@ public class PedidosServicio {
         MensajeDTO mensaje = new MensajeDTO();
         //hago consulta
 
-        Pagos pago = pagosRepositorio.findByPedidoId(pedido);
+
+
+        Pagos pago = pagosRepositorio.findByPedidoId(pedido.getId());
         //tengo que comprobar lo que queda por pagar
+
+        if (pago == null) {
+            mensaje.setMensaje("Pago no encontrado para el pedido");
+            return mensaje;
+        }
 
         Double total = pago.getCantidadDebida() - pagoDTO.getMontoPagado();
 

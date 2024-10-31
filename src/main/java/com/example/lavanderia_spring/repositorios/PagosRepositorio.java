@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PagosRepositorio extends JpaRepository<Pagos, Integer> {
 
-    @Query("SELECT p FROM Pagos p WHERE p.pedidos = :pedidoId")
-    Pagos findByPedidoId(@Param("pedidoId") Pedidos pedidoId);
+    @Query("SELECT p FROM Pagos p WHERE p.pedidos.id = :pedidoId")
+    Pagos findByPedidoId(@Param("pedidoId") Integer pedidoId);
 
 
     //consulta para probar si el catalogo tiene pago
