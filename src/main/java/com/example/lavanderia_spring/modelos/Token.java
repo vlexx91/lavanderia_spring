@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "token_acceso", schema = "lavanderia", catalog = "postgres")
+@Table(name = "token_acceso", schema = "lavanderia")
 @Getter
 @Setter
 @AllArgsConstructor

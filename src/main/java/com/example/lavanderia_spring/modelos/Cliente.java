@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 
-@Table(name = "cliente", schema = "lavanderia", catalog = "postgres")
+@Table(name = "cliente", schema = "lavanderia")
 //name = es el nombre de la tabla en la base de datos
 //schema = es el nombre del esquema en la base de datos
 //catalog = es el nombre de lenguaje de base de datos usado

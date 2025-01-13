@@ -97,6 +97,20 @@ public class CatalogoServicio {
     }
 
     /**
+     * SERVICIO PARA TEST NEGATIVO
+     */
+
+    public MensajeDTO verificarListaVacia(List<Catalogo> catalogos) {
+        MensajeDTO mensaje = new MensajeDTO();
+        if (catalogos.isEmpty()) {
+            mensaje.setMensaje("La lista está vacía, no hay precios disponibles.");
+        } else {
+            mensaje.setMensaje("Hay precios disponibles.");
+        }
+        return mensaje;
+    }
+
+    /**
      * Busca un catalogo a partir de su ID
      *
      * @param id

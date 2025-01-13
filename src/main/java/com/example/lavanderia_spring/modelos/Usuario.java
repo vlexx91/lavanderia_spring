@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "usuario", catalog = "postgres", schema = "lavanderia")
+@Table(name = "usuario", catalog = "postgres")
 @Getter
 @Setter
 @AllArgsConstructor

@@ -148,13 +148,6 @@ public class PedidosServicio {
     }
 
 
-    //comprobar si el servicio existe
-    //si servicio esta vinculado a un pedido cuyo pago es el estado no es pagado te devuelve un mensaje
-    //de que no se ha podido eliminar
-
-    //si no cumple lo anterior elimina tod0
-
-
     /**
      * Elimina un pedido por Id
      * @param id

@@ -8,7 +8,7 @@ import lombok.*;
 import java.util.List;
 
 @Entity
-@Table(name = "catalogo", schema = "lavanderia", catalog = "postgres")
+@Table(name = "catalogo", schema = "lavanderia")
 @Getter
 @Setter
 @ToString
@@ -36,4 +36,7 @@ public class Catalogo {
     @OneToMany(mappedBy = "id_catalogo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PedidosPrendasCatalogo> pedidosPrendasCatalogos;
 
+
 }
+
+

@@ -25,6 +25,13 @@ public class CatalogoControlador {
         return catalogoServicio.getAllDTO();
     }
 
+    //Controlador para test
+    @PostMapping("/verificar")
+    public MensajeDTO verificarListaVacia(@RequestBody List<Catalogo> catalogos) {
+        return catalogoServicio.verificarListaVacia(catalogos);
+    }
+
+
     @GetMapping("/servicio")
     public MensajeDTO servicioDisponible(@RequestParam TipoPrenda tipoPrenda, @RequestParam TipoCatalogo tipoCatalogo){
         return catalogoServicio.servicioDisponible(tipoPrenda, tipoCatalogo);
