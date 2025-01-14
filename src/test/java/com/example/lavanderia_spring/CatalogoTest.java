@@ -112,5 +112,32 @@ public class CatalogoTest {
 
     }
 
+    /**
+     * TEST 6 - TESTELIMINARPOSITIVO
+     */
+
+    @Test
+    void testEliminarPositivo(){
+        TipoPrenda tipoPrenda = TipoPrenda.CAMISA;
+        TipoCatalogo tipoCatalogo = TipoCatalogo.LAVADO;
+
+        MensajeDTO mensaje = catalogoServicio.eliminarServicio(1);
+
+        assertEquals("No se ha podido eliminar, pago pendiente", mensaje.getMensaje());
+    }
+
+    /**
+     * TEST 6 - TESTELIMINARNEGATIVO
+     */
+
+    @Test
+    void testEliminarNegativo(){
+
+        Integer idFake = 99;
+
+        MensajeDTO mensaje = catalogoServicio.eliminarServicio(99);
+
+        assertEquals("este no existe", mensaje.getMensaje());
+    }
 
 }

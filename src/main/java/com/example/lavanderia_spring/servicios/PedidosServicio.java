@@ -108,15 +108,15 @@ public class PedidosServicio {
      * Métod0 para procesar pago
      */
 
-    public MensajeDTO procesarPago(PagoDTO pagoDTO){
+    public MensajeDTO procesarPago(PagoDTO pagoDTO) {
         Pedidos pedido = pedidosRepositorio.findById(pagoDTO.getIdPedido()).orElse(null);
         MensajeDTO mensaje = new MensajeDTO();
-        //hago consulta
 
-
+        if (pedido == null) {
+            throw new RuntimeException("Pedido no encontrado");
+        }
 
         Pagos pago = pagosRepositorio.findByPedidoId(pedido.getId());
-        //tengo que comprobar lo que queda por pagar
 
         if (pago == null) {
             mensaje.setMensaje("Pago no encontrado para el pedido");
@@ -125,27 +125,27 @@ public class PedidosServicio {
 
         Double total = pago.getCantidadDebida() - pagoDTO.getMontoPagado();
 
-        //consulta primera si pedido esta pagado
-        if (pago.getCantidadDebida()== 0){
+        // Consulta si el pedido ya está pagado
+        if (pago.getCantidadDebida() == 0) {
             mensaje.setMensaje("Pedido ya está pagado");
             return mensaje;
-        //consulta si falta dinero
+
+            // Consulta si falta dinero
         } else if (total > 0) {
-            mensaje.setMensaje("Pedido pagado falta: " + total);
-            pago.setCantidadDebida(total.floatValue());
-            //tengo que guardar variable pago para que se actualice la tabla
+            mensaje.setMensaje("Pedido pagado, falta: " + total);
+            pago.setCantidadDebida(total); // No es necesario convertir, ya es Double
             pagosRepositorio.save(pago);
             return mensaje;
+
         } else {
-            //el -1 es por si el cliente paga demás mostrarle la sobra
-            mensaje.setMensaje("Pedido pagado y sobra: " + total*-1);
-            pago.setCantidadDebida(0.0f);
+            // El -1 es por si el cliente paga de más, mostrarle la sobra
+            mensaje.setMensaje("Pedido pagado y sobra: " + (total * -1));
+            pago.setCantidadDebida(0.0); // No es necesario el sufijo "f", ya es Double
             pagosRepositorio.save(pago);
             return mensaje;
-
         }
-
     }
+
 
 
     /**

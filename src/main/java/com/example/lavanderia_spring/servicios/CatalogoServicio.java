@@ -68,11 +68,11 @@ public class CatalogoServicio {
     }
 
     /**
-     * ejercicio Luis eliminar servicio
+     * Ejercicio Luis eliminar servicio
      */
 
     //comprobar si el servicio existe
-    //si servicio esta vinculado a un pedido cuyo pago es el estado no es pagado te devuelve un mensaje
+    //si servicio está vinculado a un pedido cuyo pago es el estado no es pagado te devuelve un mensaje
     //de que no se ha podido eliminar
 
     //si no cumple lo anterior elimina tod0
@@ -117,8 +117,8 @@ public class CatalogoServicio {
      * @return
      */
 
-    public Catalogo getById(Integer id) {
-        return catalogoRepositorio.findById(id).orElse(null);
+    public Catalogo getById(Integer id) throws Exception {
+        return catalogoRepositorio.findById(id).orElseThrow(() -> new Exception("Catalogo no encontrado"));
     }
 
     /**

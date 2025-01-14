@@ -23,7 +23,7 @@ public class Pagos {
     private Boolean pagado;
 
     @Column(name = "cantidaddebida")
-    private Float cantidadDebida;
+    private Double cantidadDebida;
 
     @ManyToOne
     @JoinColumn(name="id_cliente")
