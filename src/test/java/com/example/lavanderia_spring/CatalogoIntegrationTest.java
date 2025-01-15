@@ -2,6 +2,7 @@ package com.example.lavanderia_spring;
 
 
 import com.example.lavanderia_spring.dto.CatalogoDTO;
+import com.example.lavanderia_spring.dto.MensajeDTO;
 import com.example.lavanderia_spring.enumerados.TipoCatalogo;
 import com.example.lavanderia_spring.enumerados.TipoPrenda;
 import com.example.lavanderia_spring.modelos.Catalogo;
@@ -30,6 +31,21 @@ public class CatalogoIntegrationTest {
     @Mock
     private CatalogoRepositorio catalogoRepositorio;
 
+    //ejemplo test prueba luis
+    @Test
+    public void testFindByIdIntegracion() throws Exception{
+
+        //GIVEN
+        Mockito.when(catalogoRepositorio.findById(Mockito.any())).thenReturn(Optional.ofNullable(null));
+
+        //WHEN && THEN
+
+        assertThrows(Exception.class, ()-> catalogoServicio.getById(3));
+        Mockito.verify(catalogoRepositorio, Mockito.times(1)).findById(3);
+
+    }
+
+    //TEST 1 - LISTA
     @Test
     public void testFindAllIntegracion(){
 
@@ -60,16 +76,39 @@ public class CatalogoIntegrationTest {
 
     }
 
+    //TEST 2 - TESTSERVICIO
+
     @Test
-    public void testFindByIdIntegracion() throws Exception{
+    public void testServicioDisIntegracion() {
 
-        //GIVEN
-        Mockito.when(catalogoRepositorio.findById(Mockito.any())).thenReturn(Optional.ofNullable(null));
+        // GIVEN
+        TipoPrenda tipoPrenda1 = TipoPrenda.CAMISA;
+        TipoCatalogo tipoCatalogo1 = TipoCatalogo.LAVADO;
+        Catalogo catalogo1 = new Catalogo();
+        catalogo1.setTipoPrenda(tipoPrenda1);
+        catalogo1.setTipoCatalogo(tipoCatalogo1);
 
-        //WHEN && THEN
+        List<Catalogo> catalogos = new ArrayList<>();
+        catalogos.add(catalogo1);
 
-        assertThrows(Exception.class, ()-> catalogoServicio.getById(3));
-        Mockito.verify(catalogoRepositorio, Mockito.times(1)).findById(3);
+        Mockito.when(catalogoRepositorio.findAll()).thenReturn(catalogos);
 
+        // WHEN
+        MensajeDTO mensaje1 = catalogoServicio.servicioDisponible(tipoPrenda1, tipoCatalogo1);
+
+        // THEN
+        assertEquals("Servicio disponible", mensaje1.getMensaje());
+
+        // GIVEN
+        TipoPrenda tipoPrenda2 = TipoPrenda.BLUSA;
+        TipoCatalogo tipoCatalogo2 = TipoCatalogo.LAVADO;
+
+        Mockito.when(catalogoRepositorio.findAll()).thenReturn(new ArrayList<>());
+
+        // WHEN
+        MensajeDTO mensaje2 = catalogoServicio.servicioDisponible(tipoPrenda2, tipoCatalogo2);
+
+        // THEN
+        assertEquals("No disponible", mensaje2.getMensaje());
     }
 }

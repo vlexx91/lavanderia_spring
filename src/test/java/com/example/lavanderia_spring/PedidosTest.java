@@ -98,14 +98,11 @@ public class PedidosTest {
     @Test
     void testTotalNegativo(){
 
-        //GIVEN
-        List<PedidosPrendasCatalogo> listaPrecio = new ArrayList<>();
+        // WHEN
+        Exception exception = assertThrows(RuntimeException.class, () -> pedidosServicio.calcularImporte(99));
 
-        //WHEN
-        Exception exception = assertThrows(RuntimeException.class, ()-> pedidosServicio.calcularImporte(4));
-
-        //THEN
-        assertEquals( "No se encuentra el pedido", exception.getMessage());
+        // THEN
+        assertEquals("No se encuentra el pedido", exception.getMessage());
     }
 
     /**
