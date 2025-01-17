@@ -111,4 +111,8 @@ public class CatalogoIntegrationTest {
         // THEN
         assertEquals("No disponible", mensaje2.getMensaje());
     }
+
+
+
+
 }

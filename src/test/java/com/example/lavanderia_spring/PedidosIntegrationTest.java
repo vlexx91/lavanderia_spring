@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class PedidosIntegrationTest {
@@ -46,122 +47,40 @@ public class PedidosIntegrationTest {
     @Mock
     private CatalogoRepositorio catalogoRepositorio;
 
-    //TEST 3 - TESTTOTAL
 
-    //caso pedido no encontrado
+    /**
+     * TEST 3 - TESTTOTAL
+     */
+
     @Test
-    public void testTotalPedidoNoEncontrado(){
+    void testCalcularImportePedidoExistente() {
+        // GIVEN
+        int pedidoId = 1;
+        Pedidos pedido = new Pedidos();
+        pedido.setId(pedidoId);
 
-        //GIVEN
-        PagoDTO pago1 = new PagoDTO();
-        pago1.setIdPedido(1);
-        pago1.setMontoPagado(100.00);
+        List<PedidosPrendasCatalogo> detalles = new ArrayList<>();
+        PedidosPrendasCatalogo detalle1 = new PedidosPrendasCatalogo();
+        detalle1.setPrecio(50.0f);
+        detalle1.setCantidad(2);
+        detalles.add(detalle1);
 
-        Mockito.when(pedidosRepositorio.findById(1)).thenReturn(Optional.empty());
+        PedidosPrendasCatalogo detalle2 = new PedidosPrendasCatalogo();
+        detalle2.setPrecio(30.0f);
+        detalle2.setCantidad(1);
+        detalles.add(detalle2);
 
-        //WHEN & THEN
-        Exception exception = assertThrows(RuntimeException.class, ()-> pedidosServicio.procesarPago(pago1));
+        when(pedidosRepositorio.findById(pedidoId)).thenReturn(Optional.of(pedido));
+        when(pedidosPrendasCatalogoRepositorio.findByPedidosId(pedidoId)).thenReturn(detalles);
 
-        assertEquals("Pedido no encontrado", exception.getMessage());
+        // WHEN
+        Double total = pedidosServicio.calcularImporte(pedidoId);
 
+        // THEN
+        assertNotNull(total);
+        assertEquals(130.0, total);
     }
 
-    //caso pago no encontrado
-    @Test
-    public void testTotalPagoNoEncontrado(){
-
-        //GIVEN
-        PagoDTO pago2 = new PagoDTO();
-        pago2.setIdPedido(1);
-        pago2.setMontoPagado(100.00);
-
-        Pedidos pedido1 = new Pedidos();
-        pedido1.setId(1);
-
-        Mockito.when(pedidosRepositorio.findById(1)).thenReturn(Optional.of(pedido1));
-        Mockito.when(pagosRepositorio.findByPedidoId(1)).thenReturn(null);
-
-        //WHEN
-        MensajeDTO mensaje1 = pedidosServicio.procesarPago(pago2);
-
-        //THEN
-        assertEquals("Pago no encontrado para el pedido", mensaje1.getMensaje());
-    }
-
-    //test caso pedido pago totalmente
-    @Test
-    public void testTotalPagado(){
-
-        //GIVEN
-        PagoDTO pago3 = new PagoDTO();
-        pago3.setIdPedido(1);
-        pago3.setMontoPagado(100.00);
-
-        Pedidos pedidos2 = new Pedidos();
-        pedidos2.setId(1);
-
-        Pagos pago1 = new Pagos();
-        pago1.setCantidadDebida(0.0);
-
-        Mockito.when(pedidosRepositorio.findById(1)).thenReturn(Optional.of(pedidos2));
-        Mockito.when(pagosRepositorio.findByPedidoId(1)).thenReturn(pago1);
-
-        //WHEN
-        MensajeDTO mensaje2 = pedidosServicio.procesarPago(pago3);
-
-        //THEN
-        assertEquals("Pedido ya está pagado", mensaje2.getMensaje());
-    }
-
-    //test caso falta dinero
-    @Test
-    public void testTotalFaltaDinero(){
-
-        //GIVEN
-        PagoDTO pago4 = new PagoDTO();
-        pago4.setIdPedido(1);
-        pago4.setMontoPagado(50.00);
-
-        Pedidos pedidos3 = new Pedidos();
-        pedidos3.setId(1);
-
-        Pagos pagos2 = new Pagos();
-        pagos2.setCantidadDebida(100.00);
-
-        Mockito.when(pedidosRepositorio.findById(1)).thenReturn(Optional.of(pedidos3));
-        Mockito.when(pagosRepositorio.findByPedidoId(1)).thenReturn(pagos2);
-
-        //WHEN
-        MensajeDTO mensaje3 = pedidosServicio.procesarPago(pago4);
-
-        //THEN
-        assertEquals("Pedido pagado, falta: 50.0", mensaje3.getMensaje());
-
-    }
-
-    //test sobra dinero
-    @Test
-    public void testTotalSobraDinero(){
-
-        PagoDTO pagos5 = new PagoDTO();
-        pagos5.setIdPedido(1);
-        pagos5.setMontoPagado(150.00);
-
-        Pedidos pedidos4 = new Pedidos();
-        pedidos4.setId(1);
-
-        Pagos pago3 = new Pagos();
-        pago3.setCantidadDebida(100.00);
-
-        Mockito.when(pedidosRepositorio.findById(1)).thenReturn(Optional.of(pedidos4));
-        Mockito.when(pagosRepositorio.findByPedidoId(1)).thenReturn(pago3);
-
-        //WHEN
-        MensajeDTO mensaje4 = pedidosServicio.procesarPago(pagos5);
-
-        //THEN
-        assertEquals("Pedido pagado y sobra: 50.0", mensaje4.getMensaje());
-    }
 
     /**
      * TEST 4 - TESTCREAR
@@ -198,10 +117,10 @@ public class PedidosIntegrationTest {
         crearPedidosDTO.setTotalPrecio(100.0);
         crearPedidosDTO.setDetalles(List.of(detalleDTO));
 
-        Mockito.when(clienteRepositorio.findById(1)).thenReturn(Optional.of(cliente));
-        Mockito.when(pedidosRepositorio.save(Mockito.any(Pedidos.class))).thenReturn(pedido);
-        Mockito.when(prendasRepositorio.findById(1)).thenReturn(Optional.of(prenda));
-        Mockito.when(catalogoRepositorio.findById(1)).thenReturn(Optional.of(catalogo));
+        when(clienteRepositorio.findById(1)).thenReturn(Optional.of(cliente));
+        when(pedidosRepositorio.save(Mockito.any(Pedidos.class))).thenReturn(pedido);
+        when(prendasRepositorio.findById(1)).thenReturn(Optional.of(prenda));
+        when(catalogoRepositorio.findById(1)).thenReturn(Optional.of(catalogo));
 
         // WHEN
         Pedidos pedidoCreado = pedidosServicio.crearPedido(crearPedidosDTO);
@@ -214,6 +133,129 @@ public class PedidosIntegrationTest {
         Mockito.verify(catalogoRepositorio).findById(1);
         Mockito.verify(pedidosPrendasCatalogoRepositorio).save(Mockito.any(PedidosPrendasCatalogo.class));
     }
+
+    /**
+     * TEST 5 - TESTPAGAR
+     */
+
+    //caso pedido no encontrado
+    @Test
+    public void testTotalPedidoNoEncontrado(){
+
+        //GIVEN
+        PagoDTO pago1 = new PagoDTO();
+        pago1.setIdPedido(1);
+        pago1.setMontoPagado(100.00);
+
+        when(pedidosRepositorio.findById(1)).thenReturn(Optional.empty());
+
+        //WHEN & THEN
+        Exception exception = assertThrows(RuntimeException.class, ()-> pedidosServicio.procesarPago(pago1));
+
+        assertEquals("Pedido no encontrado", exception.getMessage());
+
+    }
+
+    //caso pago no encontrado
+    @Test
+    public void testTotalPagoNoEncontrado(){
+
+        //GIVEN
+        PagoDTO pago2 = new PagoDTO();
+        pago2.setIdPedido(1);
+        pago2.setMontoPagado(100.00);
+
+        Pedidos pedido1 = new Pedidos();
+        pedido1.setId(1);
+
+        when(pedidosRepositorio.findById(1)).thenReturn(Optional.of(pedido1));
+        when(pagosRepositorio.findByPedidoId(1)).thenReturn(null);
+
+        //WHEN
+        MensajeDTO mensaje1 = pedidosServicio.procesarPago(pago2);
+
+        //THEN
+        assertEquals("Pago no encontrado para el pedido", mensaje1.getMensaje());
+    }
+
+    //test caso pedido pago totalmente
+    @Test
+    public void testTotalPagado(){
+
+        //GIVEN
+        PagoDTO pago3 = new PagoDTO();
+        pago3.setIdPedido(1);
+        pago3.setMontoPagado(100.00);
+
+        Pedidos pedidos2 = new Pedidos();
+        pedidos2.setId(1);
+
+        Pagos pago1 = new Pagos();
+        pago1.setCantidadDebida(0.0);
+
+        when(pedidosRepositorio.findById(1)).thenReturn(Optional.of(pedidos2));
+        when(pagosRepositorio.findByPedidoId(1)).thenReturn(pago1);
+
+        //WHEN
+        MensajeDTO mensaje2 = pedidosServicio.procesarPago(pago3);
+
+        //THEN
+        assertEquals("Pedido ya está pagado", mensaje2.getMensaje());
+    }
+
+    //test caso falta dinero
+    @Test
+    public void testTotalFaltaDinero(){
+
+        //GIVEN
+        PagoDTO pago4 = new PagoDTO();
+        pago4.setIdPedido(1);
+        pago4.setMontoPagado(50.00);
+
+        Pedidos pedidos3 = new Pedidos();
+        pedidos3.setId(1);
+
+        Pagos pagos2 = new Pagos();
+        pagos2.setCantidadDebida(100.00);
+
+        when(pedidosRepositorio.findById(1)).thenReturn(Optional.of(pedidos3));
+        when(pagosRepositorio.findByPedidoId(1)).thenReturn(pagos2);
+
+        //WHEN
+        MensajeDTO mensaje3 = pedidosServicio.procesarPago(pago4);
+
+        //THEN
+        assertEquals("Pedido pagado, falta: 50.0", mensaje3.getMensaje());
+
+    }
+
+    //test sobra dinero
+    @Test
+    public void testTotalSobraDinero(){
+
+        PagoDTO pagos5 = new PagoDTO();
+        pagos5.setIdPedido(1);
+        pagos5.setMontoPagado(150.00);
+
+        Pedidos pedidos4 = new Pedidos();
+        pedidos4.setId(1);
+
+        Pagos pago3 = new Pagos();
+        pago3.setCantidadDebida(100.00);
+
+        when(pedidosRepositorio.findById(1)).thenReturn(Optional.of(pedidos4));
+        when(pagosRepositorio.findByPedidoId(1)).thenReturn(pago3);
+
+        //WHEN
+        MensajeDTO mensaje4 = pedidosServicio.procesarPago(pagos5);
+
+        //THEN
+        assertEquals("Pedido pagado y sobra: 50.0", mensaje4.getMensaje());
+    }
+
+
+
+
 }
 
 
